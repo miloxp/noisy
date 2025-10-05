@@ -1,79 +1,81 @@
 import React, { useState } from "react";
+import Images from "../assets/images";
+import Sounds from "../assets/sounds";
 const soundItems = [
-  { id: 1, name: "Bee", image: "bee.jpg", sound: "AVEJA.mp3", emoji: "🐝" },
+  { id: 1, name: "Bee", image: Images.bee, sound: Sounds.AVEJA, emoji: "🐝" },
   {
     id: 2,
     name: "Bell",
-    image: "bell.jpg",
-    sound: "CAMPANA.mp3",
+    image: Images.bell,
+    sound: Sounds.CAMPANA,
     emoji: "🔔",
   },
-  { id: 3, name: "Car", image: "car.png", sound: "CARRO.mp3", emoji: "🚗" },
-  { id: 4, name: "Cat", image: "cat.jpg", sound: "GATO.mp3", emoji: "🐱" },
-  { id: 5, name: "Dog", image: "dog.jpg", sound: "PERRO.mp3", emoji: "🐶" },
+  { id: 3, name: "Car", image: Images.car, sound: Sounds.CARRO, emoji: "🚗" },
+  { id: 4, name: "Cat", image: Images.cat, sound: Sounds.GATO, emoji: "🐱" },
+  { id: 5, name: "Dog", image: Images.dog, sound: Sounds.PERRO, emoji: "🐶" },
   {
     id: 6,
     name: "Donkey",
-    image: "donkey.jpg",
-    sound: "BURRO.mp3",
+    image: Images.donkey,
+    sound: Sounds.BURRO,
     emoji: "🫏",
   },
   {
     id: 7,
     name: "Drum",
-    image: "drum.jpg",
-    sound: "TAMBOR.mp3",
+    image: Images.drum,
+    sound: Sounds.TAMBOR,
     emoji: "🥁",
   },
   {
     id: 8,
     name: "Guitar",
-    image: "guitar.jpg",
-    sound: "GRITARRA.mp3",
+    image: Images.guitar,
+    sound: Sounds.GRITARRA,
     emoji: "🎸",
   },
-  { id: 9, name: "Gun", image: "gun.png", sound: "PISTOLA.mp3", emoji: "🔫" },
+  { id: 9, name: "Gun", image: Images.gun, sound: Sounds.PISTOLA, emoji: "🔫" },
   {
     id: 10,
     name: "Phone",
-    image: "phone.jpg",
-    sound: "FELEFONO.mp3",
+    image: Images.phone,
+    sound: Sounds.FELEFONO,
     emoji: "📞",
   },
   {
     id: 11,
     name: "Piano",
-    image: "piano.jpg",
-    sound: "PIANO.mp3",
+    image: Images.piano,
+    sound: Sounds.PIANO,
     emoji: "🎹",
   },
-  { id: 12, name: "Pig", image: "pig.jpg", sound: "CERDO.mp3", emoji: "🐷" },
+  { id: 12, name: "Pig", image: Images.pig, sound: Sounds.CERDO, emoji: "🐷" },
   {
     id: 13,
     name: "Santa",
-    image: "santa.jpg",
-    sound: "PAPA NOEL.mp3",
+    image: Images.santa,
+    sound: Sounds.PAPA_NOEL,
     emoji: "🎅",
   },
   {
     id: 14,
     name: "Saw",
-    image: "saw.png",
-    sound: "SERRUCHO.mp3",
+    image: Images.saw,
+    sound: Sounds.SERRUCHO,
     emoji: "🪚",
   },
   {
     id: 15,
     name: "Teapot",
-    image: "teapot.jpg",
-    sound: "TETERA.mp3",
+    image: Images.teapot,
+    sound: Sounds.TETERA,
     emoji: "🫖",
   },
   {
     id: 16,
     name: "Tiger",
-    image: "tiger.jpg",
-    sound: "TIGRE.mp3",
+    image: Images.tiger,
+    sound: Sounds.TIGRE,
     emoji: "🐅",
   },
 ];
@@ -90,10 +92,24 @@ const SoundboardGrid = () => {
     }
 
     // Play new sound
-    const audio = new Audio(`/assets/sounds/${soundFile}`);
-    audio.play();
+    const audio = new Audio(soundFile);
+
+    // Add error handling
+    audio.onerror = () => {
+      console.warn(`Failed to load sound: ${soundFile}`);
+      setPlayingSound(null);
+      setIsPlaying(false);
+    };
+
+    audio.play().catch((error) => {
+      console.warn(`Failed to play sound: ${soundFile}`, error);
+      setPlayingSound(null);
+      setIsPlaying(false);
+    });
+
     setPlayingSound(audio);
     setIsPlaying(itemId);
+
     // Reset playing state when sound ends
     audio.onended = () => {
       setPlayingSound(null);
@@ -176,9 +192,13 @@ const SoundboardGrid = () => {
                 <div className="mb-1 sm:mb-2">
                   {item.image && !item.isPlaceholder ? (
                     <img
-                      src={`/assets/images/${item.image}`}
+                      src={item.image}
                       alt={item.name}
                       className="w-24 h-24 object-cover rounded-lg"
+                      onError={(e) => {
+                        console.warn(`Failed to load image: ${item.image}`);
+                        e.target.style.display = "none";
+                      }}
                     />
                   ) : (
                     <div className="text-xl sm:text-2xl md:text-3xl">
