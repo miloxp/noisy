@@ -152,11 +152,9 @@ const SoundboardGrid = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-            Interactive <span className="text-noisy-primary">Soundboard</span>
-          </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Click any button to play sounds! Tap, laugh, and repeat.
+            Click en cualquier botón para reproducir los sonidos! Toca, ríe y
+            repite.
           </p>
         </div>
 
@@ -220,12 +218,11 @@ const SoundboardGrid = () => {
         <div className="text-center mt-8 sm:mt-12">
           <div className="bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl p-4 sm:p-6 max-w-2xl mx-auto mx-4">
             <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">
-              How to Use
+              Cómo usar
             </h3>
             <p className="text-sm sm:text-base text-gray-600">
-              Click any button to play its sound. The buttons with images are
-              ready to use, while the "Coming Soon" buttons will be available in
-              future updates!
+              Click en cualquier botón para reproducir su sonido. Los botones
+              con imágenes están listos para usar.
             </p>
           </div>
         </div>
